@@ -1,0 +1,41 @@
+{
+  "ecmaVersion": 8,
+  "libs": [
+    "react",
+    "underscore",
+    "jquery",
+    "chai",
+    "browser"
+  ],
+  "loadEagerly": [],
+  "dontLoad": [
+    "node_modules/**"
+  ],
+  "plugins": {
+    "complete_strings": {
+      "maxLength": 15
+    },
+    "node_resolve": {},
+    "node": {
+      "dontLoad": "",
+      "load": "",
+      "modules": ""
+    },
+    "doc_comment": {
+      "fullDocs": true,
+      "strong": false
+    },
+    "commonjs": {},
+    "requirejs": {
+      "baseURL": "",
+      "paths": "",
+      "override": ""
+    },
+    "es_modules": {},
+    "modules": {
+      "dontLoad": "",
+      "load": "",
+      "modules": ""
+    }
+  }
+}
