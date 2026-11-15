@@ -12,12 +12,14 @@ function showError(input, message) {
   formControl.className = 'form-control error';
   const small = formControl.querySelector('small');
   small.innerText = message;
+  input.setAttribute('aria-invalid', 'true');
 }
 
 //Show success outline
 function showSuccess(input) {
   const formControl = input.parentElement;
   formControl.className = 'form-control success';
+  input.setAttribute('aria-invalid', 'false');
 }
 
 //Check is email is Valid
@@ -43,9 +45,10 @@ function checkRequired(inputArr) {
 
 //check min and max length
 function checkLength(input, min, max) {
-  if (input.value.length < min) {
+  const value = input === username ? input.value.trim() : input.value;
+  if (value.length < min) {
     showError(input, `${getFieldName(input)} must be at least ${min} characters long`)
-  } else if (input.value.length > max) {
+  } else if (value.length > max) {
     showError(input, `${getFieldName(input)} must be less than ${max} characters long`)
   } else {
     showSuccess(input);
@@ -56,6 +59,8 @@ function checkLength(input, min, max) {
 function checkPasswordsMatch(input1, input2) {
   if (input1.value !== input2.value) {
     showError(input2, "Passwords do not match")
+  } else {
+    showSuccess(input2);
   }
 }
 
@@ -71,10 +76,11 @@ form.addEventListener("submit", function(e) {
 
   const inputArr = [username, email, password, password2];
 
-  checkRequired(inputArr);
   checkLength(username, 3, 15);
   checkLength(password, 6, 25);
   checkEmail(email);
   checkPasswordsMatch(password, password2);
+  // Required errors take precedence over format and matching errors.
+  checkRequired(inputArr.filter(input => input.value.trim() === ''));
 
 });
